@@ -1,12 +1,11 @@
 import express from "express";
+import parseRouter from "./routes/parseRouter.js";
 
 const app = express();
 const PORT = 8080;
 
-app.get("/", (_req, res) => {
-  res.send("Привет из TypeScript!");
-});
+app.use("/api", parseRouter);
 
 app.listen(PORT, () => {
-  console.log(`Сервер запущен на порту ${PORT}`);
+  console.log(`Server listening on http://localhost:${PORT}`);
 });
