@@ -1,0 +1,9 @@
+services:
+  parser:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: parser:latest
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
