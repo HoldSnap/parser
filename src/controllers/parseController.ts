@@ -6,6 +6,7 @@ export async function parseHandler(req: Request, res: Response): Promise<void> {
   const url = String(req.query.url ?? "");
   if (!url) {
     res.status(400).send("Missing url parameter");
+
     return;
   }
 

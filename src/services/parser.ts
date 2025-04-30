@@ -9,5 +9,6 @@ export async function fetchAndExtractWords(
   const { data } = await axios.get<string>(url);
   const $ = cheerio.load(data);
   const text = $("body").text();
+
   return topLongestWords(text, limit);
 }

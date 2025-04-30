@@ -37,5 +37,6 @@ export async function generatePdf(words: string[]): Promise<Buffer> {
   doc.end();
 
   const bufAB = await arrayBuffer(doc);
+
   return Buffer.from(bufAB);
 }
