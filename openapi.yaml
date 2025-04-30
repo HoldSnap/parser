@@ -15,8 +15,8 @@ paths:
         - Parser
       summary: Парсит страницу и возвращает PDF
       description: >
-        Принимает URL страницы в query-параметре `url`, извлекает из неё первые N слов
-        (по умолчанию 10) и возвращает PDF-файл с этим списком.
+        Принимает в query-параметре `url` адрес страницы для парсинга,
+        извлекает первые 10 слов (по умолчанию) и возвращает PDF.
       parameters:
         - in: query
           name: url
@@ -25,15 +25,6 @@ paths:
           schema:
             type: string
           example: "https://example.com"
-        - in: query
-          name: count
-          description: Количество слов для извлечения (необязательный, по умолчанию 10)
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            default: 10
-          example: 10
       responses:
         "200":
           description: Успешно — возвращён PDF-файл
