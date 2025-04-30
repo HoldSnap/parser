@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: Parser API
+  version: "1.0.0"
+  description: >
+    API для парсинга страницы: извлекает слова и генерирует PDF-файл со списком слов.
+servers:
+  - url: http://localhost:8080/api
+    description: Локальный сервер разработки
+
+paths:
+  /parse:
+    get:
+      tags:
+        - Parser
+      summary: Парсит страницу и возвращает PDF
+      description: >
+        Принимает в query-параметре `url` адрес страницы для парсинга,
+        извлекает первые 10 слов (по умолчанию) и возвращает PDF.
+      parameters:
+        - in: query
+          name: url
+          description: URL страницы для парсинга
+          required: true
+          schema:
+            type: string
+          example: "https://example.com"
+      responses:
+        "200":
+          description: Успешно — возвращён PDF-файл
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Описание ошибки
+      required:
+        - message
+
+  responses:
+    BadRequest:
+      description: Неверный запрос (отсутствует или некорректен параметр `url`)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            missingUrl:
+              value:
+                message: "Missing url parameter"
+    InternalError:
+      description: Внутренняя ошибка сервера
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            generic:
+              value:
+                message: "Internal Server Error"
